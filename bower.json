@@ -1,0 +1,23 @@
+{
+  "name": "transfer-feed",
+  "version": "0.1.0",
+  "authors": [
+    "John Strong <strngj411@gmail.com>"
+  ],
+  "description": "\"live footbal transfer updates with scalaPlay\"",
+  "main": "public/javascripts/main.js",
+  "keywords": [
+    "footbal",
+    "transfer",
+    "live",
+    "updates"
+  ],
+  "license": "Apache 2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
