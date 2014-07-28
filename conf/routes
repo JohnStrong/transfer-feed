@@ -3,11 +3,11 @@
 # ~~~~
 
 # Home page
-GET     /				controllers.Application.index
+GET		/				controllers.Application.index
 
-GET 	/feed/:team  	controllers.Application.feed(team)
+GET		/feed/:team  	controllers.Application.feed(team)
 
 # Map static resources from the /public folder to the /assets URL path
 
 GET		/bower/*file	controllers.BowerAssets.at(file)
-GET     /assets/*file	controllers.Assets.at(path="/public", file)
+GET		/assets/*file	controllers.Assets.at(path="/public", file)
