@@ -9,5 +9,7 @@ scalaVersion := "2.11.1"
 libraryDependencies ++= Seq(
   jdbc,
   cache,
-  ws
+  ws,
+  "com.typesafe.akka" %% "akka-actor" % "2.3.3",
+  "com.typesafe.akka" %% "akka-contrib" % "2.3.3"
 )
