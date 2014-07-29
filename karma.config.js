@@ -17,8 +17,8 @@ module.exports = function(config) {
     files: [
       'public/javascripts/lib/*js',
       'public/javascripts/*.js',
-      'test/javascripts/jasmine/spec/*js',
-      'test/javascripts/jasmine/lib/*js'
+      'test/javascripts/jasmine/spec/*.js',
+      'test/javascripts/jasmine/mocks/*.js'
     ],
 
 
