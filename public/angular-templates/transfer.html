@@ -1,0 +1,34 @@
+<div class="search">
+	<div ng-controller="SourcesController">
+		<div class="watchlist">
+			<div ng-hide="adding">
+				<a ng-click="watchlist()" href="">add new transfer source?</a>
+			</div>
+			<div ng-show="adding">
+				<form role="form-inline">
+					<div class="form-group">
+						<input type="text" class="form-control" ng-model="source.name" placeholder="source title (eg. skysports)">
+					</div>
+					<div class="form-group">
+						<input type="url" class="form-control" ng-model="source.link" placeholder="source transfer page (eg. http://www1.skysports.com/transfer-centre/)"> 
+					</div>
+					<button ng-click="addSource()" class="btn btn-primary">	
+						add to watchlist
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<form role="form">
+		<div class="form-group">
+			<div class="row">
+				<div class="col-xs-10">
+					<input type="text" class="form-control" ng-model="team">
+				</div>
+				<div class="col-xs-2">
+					<button ng-click="subscribe()" class="btn btn-primary">Subscribe</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
