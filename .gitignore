@@ -18,3 +18,4 @@ bower_components
 conf/application.conf
 project/build.properties
 project/Build.scala
+test/javascripts/jasmine/lib
