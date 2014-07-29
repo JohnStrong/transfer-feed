@@ -1,0 +1,9 @@
+body {
+	font-family: 'Ubuntu', sans-serif;
+	line-height: 1.5em;
+}
+
+.search {
+	width: 60%;
+	margin: 0 auto;
+}

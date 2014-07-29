@@ -17,3 +17,4 @@ dist
 bower_components
 conf/application.conf
 project/build.properties
+project/Build.scala

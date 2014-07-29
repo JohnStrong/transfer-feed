@@ -9,5 +9,6 @@ GET		/feed/:team  	controllers.Application.feed(team)
 
 # Map static resources from the /public folder to the /assets URL path
 
-GET		/bower/*file	controllers.BowerAssets.at(file)
+GET		/templates/*file	controllers.Templates.at(file)
+
 GET		/assets/*file	controllers.Assets.at(path="/public", file)
