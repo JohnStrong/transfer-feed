@@ -20,8 +20,8 @@ transferFeed.factory('wsStream', function() {
 	var url = 'ws://127.0.0.1:9000/feed',
 	ws = new WebSocket(url);
 
-	ws.onopen = function(evnt) { //console.log('channel open: ', evnt); };
-	ws.onclose = function(evnt) { //console.log('channel closed: ', evnt); };
+	ws.onopen = function(evnt) { console.log('channel open: ', evnt); };
+	ws.onclose = function(evnt) { console.log('channel closed: ', evnt); };
 
 	return {
 		'send': function(msg) { ws.send(msg); }
