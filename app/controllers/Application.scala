@@ -8,12 +8,14 @@ import actors._
 
 object Application extends Controller {
 
+  import actors.TransferFeed._
+
   def index = Action {
     Ok(views.html.main())
   }
 
-  def feed(team: String) = WebSocket.acceptWithActor[String, String] { _ => out => 
-  	TransferFeed.props(team, out, Core.system)
+  def feed() = WebSocket.acceptWithActor[String, String] { _ => out => 
+  	TransferFeed.props(out, Core.system)
   }
 
 }

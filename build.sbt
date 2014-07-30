@@ -11,5 +11,7 @@ libraryDependencies ++= Seq(
   cache,
   ws,
   "com.typesafe.akka" %% "akka-actor" % "2.3.3",
-  "com.typesafe.akka" %% "akka-contrib" % "2.3.3"
+  "com.typesafe.akka" %% "akka-contrib" % "2.3.3",
+  "com.typesafe.akka" %% "akka-remote" % "2.3.3",
+  "com.typesafe.akka" %% "akka-cluster" % "2.3.3"
 )

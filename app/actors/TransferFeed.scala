@@ -4,21 +4,22 @@ import akka.actor._
 
 object TransferFeed {
 	
-	def props(team: String, out: ActorRef, app: ActorRef) = {
-		Props(new TransferFeed(team, out, app))
+	def props(out: ActorRef, app: ActorRef) = {
+		Props(new TransferFeed(out, app))
 	}
 
-	case class Source(url: String)
+	case class Team(name: String)
+
+	case class Source(name: String, url: String)
 }
 
-class TransferFeed(team: String, out: ActorRef, app: ActorRef) extends Actor {
+class TransferFeed(out: ActorRef, app: ActorRef) extends Actor {
 
 	import TransferFeed._
 
-	val toWatch = context.actorOf(Watchlist.props(self), "watchlist")
-
 	def receive = {
-		case s @ Source(_) => app ! s
+		case team @ Team(name) => app ! team
+		case source @ Source(_, _) => app ! source
 		case _ => sys.error("invalid message received in TransferFeed")
 	}
 }

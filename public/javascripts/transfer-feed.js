@@ -41,6 +41,6 @@ transferFeed.controller('SourcesController', ['$scope', function($scope) {
 
 	$scope.addSource = function() {
 		$scope.adding = false;
-		$scope.$parent.watchlist.push(scope.source);
+		$scope.$parent.watchlist.push($scope.source);
 	}
 }]);
