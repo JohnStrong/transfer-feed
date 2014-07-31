@@ -37,7 +37,7 @@ transferFeed.controller('TransferController', ['$scope', 'wsStream', function($s
 	
 	// begins websocket connection with play/akka frontends
 	$scope.subscribe = function() {
-		// todo
+		//$scope.ws.send($scope.team);
 	};
 
 }]);
@@ -54,7 +54,17 @@ transferFeed.controller('SourcesController', ['$scope', function($scope) {
 		$scope.adding = true;
 	}
 
+	// adds a new media source to the watch list
 	$scope.addSource = function() {
 		$scope.adding = false;
+
+		var msg = { 
+			'add-source': {} 
+		};
+
+		msg['add-source'].name = $scope.source.name;
+		msg['add-source'].url = $scope.source.url;
+
+		$scope.$parent.ws.send(msg);
 	}
 }]);

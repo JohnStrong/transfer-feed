@@ -5,6 +5,7 @@ import play.api.libs.json._
 import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
 import play.api.mvc.WebSocket.FrameFormatter
+import play.api.Logger
 
 object TransferFeed {
 	
@@ -29,8 +30,8 @@ object TransferFeed {
 
 		implicit def streamEventFormatter: Format[StreamEvent] = Format(
 			(__ \ "event").read[String].flatMap {
-				case "add-TeamMsg" => TeamEvent.teamEventFormatter.map(identity)
-				case "add-SourceMsg" => SourceEvent.sourceEventFormatter.map(identity)
+				case "add-team" => TeamEvent.teamEventFormatter.map(identity)
+				case "add-source" => SourceEvent.sourceEventFormatter.map(identity)
 			}, Writes {
 				case news: TransferNews => TransferNews.transferNewsFormatter.writes(news)
 			}
@@ -72,8 +73,11 @@ class TransferFeed(out: ActorRef, app: ActorRef) extends Actor {
 	import TransferFeed._
 
 	def receive = {
-		case sourceMsg @ SourceMsg(_, _) => app ! sourceMsg
-		case teamMsg @ TeamMsg(name, _) => app ! teamMsg
+		case sourceMsg @ SourceMsg(_, _) => 
+			Logger.debug("SOURCE MESSAGE FROM CLIENT: " + sourceMsg)
+			app ! sourceMsg
+		case teamMsg @ TeamMsg(name, _) => 
+			Logger.debug("TEAM MESSAFE FROM CLIENT: " + teamMsg)
 		case _ => sys.error("invalid message received in TransferFeed")
 	}
 }
