@@ -6,7 +6,7 @@ import akka.routing.ConsistentHashingRouter.ConsistentHashable
 object TransferManager {
 
 	import models.RssStream
-	
+
 	def props():Props = Props(new TransferManager)
 
 	case class SourceHandler(name: String, feed:RssStream) extends ConsistentHashable {
@@ -19,10 +19,10 @@ class TransferManager extends Actor {
 	import TransferManager._
 	
 	def receive = {
-		case SourceHandler(name, feed) =>
+		case SourceHandler(name, rssFeed) =>
 			// add new source node if non already exists with this name
 			val source = context.child(name).getOrElse {
-				context.actorOf(Source.props(feed), name)
+				context.actorOf(Source.props(rssFeed), name)
 			}
 		case _ => sys.error("failed in Transfer Manager: unknown message")
 	}

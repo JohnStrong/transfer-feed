@@ -1,12 +1,11 @@
 package models
 
 import io.Source
-import java.net.URL
+import xml.{Elem, XML}
 
-object RssStream {
-	def apply(url: String) = new RssStream(new URL(url))
-}
-
-class RssStream(stream: URL) {
-	// todo: allow opening of stream and parsing of contents
+// should extend a parser to get contents from rss
+class RssStream(url: String) {
+	
+	// returns xml tree of rss feed from url source
+	def read:Elem = XML.load(url)
 }

@@ -14,7 +14,7 @@ class Source(feed: RssStream) extends Actor {
 
 	import Source._
 
-	// set up schedule event tick
+	// set up schedule event tick to load xml contents from stream
 
 	def receive = {
 		case Cycle => // look up latest transfer news for source

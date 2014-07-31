@@ -20,7 +20,7 @@ class TransferService extends Actor {
 
 	def receive = {
 		case SourceMsg(name, url) =>
-			val stream = RssStream(url)
+			val stream = new RssStream(url)
 			manager ! SourceHandler(name, stream)
 		case _ => sys.error("invalid message received in TransferService")
 	}
