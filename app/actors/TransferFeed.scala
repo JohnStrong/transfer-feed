@@ -14,9 +14,9 @@ object TransferFeed {
 
 	sealed trait StreamEvent
 
-	case class Team(name: String, id: Int) extends StreamEvent
+	case class TeamMsg(name: String, id: Int) extends StreamEvent
 
-	case class Source(name: String, url: String) extends StreamEvent
+	case class SourceMsg(name: String, url: String) extends StreamEvent
 
 	// will change later
 	case class TransferNews(sourceName: String, news: String) extends StreamEvent
@@ -29,8 +29,8 @@ object TransferFeed {
 
 		implicit def streamEventFormatter: Format[StreamEvent] = Format(
 			(__ \ "event").read[String].flatMap {
-				case "add-team" => TeamEvent.teamEventFormatter.map(identity)
-				case "add-source" => SourceEvent.sourceEventFormatter.map(identity)
+				case "add-TeamMsg" => TeamEvent.teamEventFormatter.map(identity)
+				case "add-SourceMsg" => SourceEvent.sourceEventFormatter.map(identity)
 			}, Writes {
 				case news: TransferNews => TransferNews.transferNewsFormatter.writes(news)
 			}
@@ -46,17 +46,17 @@ object TransferFeed {
  	}
 
 	object TeamEvent {
-		implicit def teamEventFormatter: Reads[Team] = (
-			(__ \ "team").read[String] and
+		implicit def teamEventFormatter: Reads[TeamMsg] = (
+			(__ \ "TeamMsg").read[String] and
 			(__ \ "id").read[Int]
-			)(Team.apply _)
+			)(TeamMsg.apply _)
 	}
 
 	object SourceEvent {
-		implicit def sourceEventFormatter: Reads[Source] = (
+		implicit def sourceEventFormatter: Reads[SourceMsg] = (
 			(__ \ "name").read[String] and
 			(__ \ "url").read[String]
-		)(Source.apply _)
+		)(SourceMsg.apply _)
 	}
 
 	object TransferNews {
@@ -72,8 +72,8 @@ class TransferFeed(out: ActorRef, app: ActorRef) extends Actor {
 	import TransferFeed._
 
 	def receive = {
-		case team @ Team(name, _) => app ! team
-		case source @ Source(_, _) => app ! source
+		case sourceMsg @ SourceMsg(_, _) => app ! sourceMsg
+		case teamMsg @ TeamMsg(name, _) => app ! teamMsg
 		case _ => sys.error("invalid message received in TransferFeed")
 	}
 }
