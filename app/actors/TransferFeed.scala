@@ -48,15 +48,15 @@ object TransferFeed {
 
 	object TeamEvent {
 		implicit def teamEventFormatter: Reads[TeamMsg] = (
-			(__ \ "TeamMsg").read[String] and
-			(__ \ "id").read[Int]
-			)(TeamMsg.apply _)
+			(__ \ "name").read[String] ~
+				(__ \ "id").read[Int]
+		)(TeamMsg.apply _)
 	}
 
 	object SourceEvent {
 		implicit def sourceEventFormatter: Reads[SourceMsg] = (
-			(__ \ "name").read[String] and
-			(__ \ "url").read[String]
+			(__ \ "name").read[String] ~
+				(__ \ "url").read[String]
 		)(SourceMsg.apply _)
 	}
 
@@ -73,11 +73,11 @@ class TransferFeed(out: ActorRef, app: ActorRef) extends Actor {
 	import TransferFeed._
 
 	def receive = {
-		case sourceMsg @ SourceMsg(_, _) => 
-			Logger.debug("SOURCE MESSAGE FROM CLIENT: " + sourceMsg)
+		case sourceMsg @ SourceMsg(name, url) => 
+			Logger.debug("SOURCE MESSAGE FROM CLIENT: " + name + ": " + url)
 			app ! sourceMsg
 		case teamMsg @ TeamMsg(name, _) => 
-			Logger.debug("TEAM MESSAFE FROM CLIENT: " + teamMsg)
+			Logger.debug("TEAM MESSAFE FROM CLIENT: " + name)
 		case _ => sys.error("invalid message received in TransferFeed")
 	}
 }

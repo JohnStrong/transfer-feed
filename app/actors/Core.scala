@@ -25,6 +25,6 @@ class CoreSystem(app: Application) extends Plugin {
 	override def onStart() = {
 		system.actorOf(TransferManager.props(), "transferManager")
 	}
-
- 	lazy val transferService = system.actorOf(TransferService.props(), "transferService")
+	
+	lazy val transferService = system.actorOf(TransferService.props(), "transferService")
 }

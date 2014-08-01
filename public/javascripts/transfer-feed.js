@@ -59,11 +59,10 @@ transferFeed.controller('SourcesController', ['$scope', function($scope) {
 		$scope.adding = false;
 
 		var msg = { 
-			'add-source': {} 
+			'event': 'add-source',
+			'name': $scope.source.name,
+			'url': $scope.source.url
 		};
-
-		msg['add-source'].name = $scope.source.name;
-		msg['add-source'].url = $scope.source.url;
 
 		$scope.$parent.ws.send(msg);
 	}
