@@ -1,15 +1,31 @@
 var transferStream = angular.module('transferStream', []);
 
-// websocket url for play frontend api
-transferStream.value('url', 'ws://127.0.0.1:9000/feed');
-
 // handles setting-up/tearing-down/sending-msgs of websocket channel
-transferStream.factory('eventStream', ['url', function(url) {
+transferStream.service('eventStream', function() {
 
-	var ws = new WebSocket(url);
+	function EventSocket(url) {
+		this.ws = new WebSocket(url);
+		this.ws.onopen = this.onOpen;
+		this.ws.onclose = this.onClose;
+	}
 
-	ws.onopen = function(evnt) { console.log('channel open: ', evnt); };
-	ws.onclose = function(evnt) { console.log('channel closed: ', evnt); };
+	// sends a message to source
+	EventSocket.prototype.send = function(msg) {
+		this.ws.send(msg);
+	};
 
-	return function(msg) { ws.send(msg); }
-}]);
+	/**
+	 * 
+	 * logging type methods triggered when a socket is opened, closed
+	 **/
+
+	EventSocket.prototype.onOpen = function(evnt) { 
+		console.log('channel open: ', evnt); 
+	}
+
+	EventSocket.prototype.onClose = function(evnt) { 
+		console.log('channel closed: ', evnt); 
+	};
+
+	return EventSocket;
+});

@@ -14,12 +14,16 @@ transferFeed.config(['$routeProvider', function($routeProvider) {
 	})
 }]);
 
+// websocket url for play frontend api
+transferFeed.value('url', 'ws://127.0.0.1:9000/feed');
+
 // subscribing teams to live transfer updates
-transferFeed.controller('TransferController', ['$scope', 'eventStream', function($scope, stream) {
+transferFeed.controller('TransferController', ['$scope', 'url', 'eventStream', 
+	function($scope, url, stream) {
 
 	$scope.team = 'liverpool';
 
-	$scope.ws = stream;
+	$scope.ws = new stream(url);
 	
 	// begins websocket connection with play/akka frontends
 	$scope.subscribe = function() {
@@ -50,6 +54,6 @@ transferFeed.controller('SourcesController', ['$scope', function($scope) {
 			'url': $scope.source.url
 		};
 
-		$scope.$parent.ws(msg);
+		$scope.$parent.ws.send(msg);
 	}
 }]);
