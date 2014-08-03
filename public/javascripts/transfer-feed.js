@@ -14,19 +14,18 @@ transferFeed.config(['$routeProvider', function($routeProvider) {
 	})
 }]);
 
-// handles setting-up/tearing-down/sending-msgs of websocket channel
-transferFeed.factory('wsStream', function() {
+transferFeed.value('streamUrl', 'ws://127.0.0.1:9000/feed');
 
-	var url = 'ws://127.0.0.1:9000/feed',
-	ws = new WebSocket(url);
+// handles setting-up/tearing-down/sending-msgs of websocket channel
+transferFeed.factory('wsStream', ['streamUrl', function(streamUrl) {
+
+	var ws = new WebSocket(streamUrl);
 
 	ws.onopen = function(evnt) { console.log('channel open: ', evnt); };
 	ws.onclose = function(evnt) { console.log('channel closed: ', evnt); };
 
-	return {
-		'send': function(msg) { ws.send(msg); }
-	};
-});
+	return function(msg) { ws.send(msg); }
+}]);
 
 // subscribing teams to live transfer updates
 transferFeed.controller('TransferController', ['$scope', 'wsStream', function($scope, wsStream) {
@@ -64,6 +63,6 @@ transferFeed.controller('SourcesController', ['$scope', function($scope) {
 			'url': $scope.source.url
 		};
 
-		$scope.$parent.ws.send(msg);
+		$scope.$parent.ws(msg);
 	}
 }]);
