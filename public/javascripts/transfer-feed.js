@@ -1,4 +1,4 @@
-var transferFeed = angular.module('transferFeed', ['ngRoute']);
+var transferFeed = angular.module('transferFeed', ['ngRoute', 'transferStream']);
 
 transferFeed.config(['$routeProvider', function($routeProvider) {
 
@@ -14,25 +14,12 @@ transferFeed.config(['$routeProvider', function($routeProvider) {
 	})
 }]);
 
-transferFeed.value('streamUrl', 'ws://127.0.0.1:9000/feed');
-
-// handles setting-up/tearing-down/sending-msgs of websocket channel
-transferFeed.factory('wsStream', ['streamUrl', function(streamUrl) {
-
-	var ws = new WebSocket(streamUrl);
-
-	ws.onopen = function(evnt) { console.log('channel open: ', evnt); };
-	ws.onclose = function(evnt) { console.log('channel closed: ', evnt); };
-
-	return function(msg) { ws.send(msg); }
-}]);
-
 // subscribing teams to live transfer updates
-transferFeed.controller('TransferController', ['$scope', 'wsStream', function($scope, wsStream) {
+transferFeed.controller('TransferController', ['$scope', 'eventStream', function($scope, stream) {
 
 	$scope.team = 'liverpool';
 
-	$scope.ws = wsStream;
+	$scope.ws = stream;
 	
 	// begins websocket connection with play/akka frontends
 	$scope.subscribe = function() {
