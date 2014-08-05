@@ -4,7 +4,7 @@ import akka.actor._
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 
-import models.RssStream
+import rss.RssStream
 
 object Source {
 	def props(feed: RssStream):Props = Props(new Source(feed))

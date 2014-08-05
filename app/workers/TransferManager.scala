@@ -5,7 +5,7 @@ import akka.routing.ConsistentHashingRouter.ConsistentHashable
 
 object TransferManager {
 
-	import models.RssStream
+	import rss.RssStream
 
 	def props():Props = Props(new TransferManager)
 

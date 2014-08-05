@@ -4,7 +4,7 @@ import akka.actor._
 import akka.actor.Props
 import akka.routing.FromConfig
 
-import models.RssStream
+import rss._
 import workers.TransferManager.SourceHandler
 
 object TransferService {
@@ -20,7 +20,7 @@ class TransferService extends Actor {
 
 	def receive = {
 		case SourceMsg(name, url) =>
-			val stream = new RssStream(url)
+			val stream = new RssStream with RssParser
 			manager ! SourceHandler(name, stream)
 		case _ => sys.error("invalid message received in TransferService")
 	}

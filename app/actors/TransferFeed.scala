@@ -1,11 +1,11 @@
 package actors
 
 import akka.actor._
+
 import play.api.libs.json._
 import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
 import play.api.mvc.WebSocket.FrameFormatter
-import play.api.Logger
 
 object TransferFeed {
 	
@@ -67,16 +67,16 @@ object TransferFeed {
 	}
 }
 
-class TransferFeed(out: ActorRef, app: ActorRef) extends Actor {
+class TransferFeed(out: ActorRef, app: ActorRef) extends Actor with ActorLogging {
 
 	import TransferFeed._
 
 	def receive = {
+
 		case sourceMsg @ SourceMsg(name, url) => 
-			Logger.debug("SOURCE MESSAGE FROM CLIENT: " + name + ": " + url)
 			app ! sourceMsg
 		case teamMsg @ TeamMsg(name, _) => 
-			Logger.debug("TEAM MESSAFE FROM CLIENT: " + name)
+			
 		case _ => sys.error("invalid message received in TransferFeed")
 	}
 }
