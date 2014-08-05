@@ -19,3 +19,4 @@ project/build.properties
 project/Build.scala
 test/javascripts/jasmine/lib
 test/javascripts/jasmine/mocks/angular-mocks.js
+activator-sbt-echo-play-shim.sbt

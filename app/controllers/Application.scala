@@ -8,13 +8,13 @@ import actors._
 
 object Application extends Controller {
 
-  import actors.TransferFeed.StreamEvent
+  import actors.TransferFeed.ClientEvent
 
   def index = Action {
     Ok(views.html.main())
   }
 
-  def feed() = WebSocket.acceptWithActor[StreamEvent, StreamEvent] { _ => out => 
+  def feed() = WebSocket.acceptWithActor[ClientEvent, ClientEvent] { in => out => 
   	TransferFeed.props(out, Core.system)
   }
 
