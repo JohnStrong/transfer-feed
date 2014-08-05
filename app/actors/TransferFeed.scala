@@ -34,6 +34,7 @@ object TransferFeed {
 			}
 		)
 
+		// format json input/output into valid ClientEvent objects each request
 		implicit val inEventFormat:Format[ClientEvent] = 
 			Format(inEventFormatter, Writes {
 				case t:TransferNews => TransferNews.transferNewsFormatter.writes(t)
